@@ -1,8 +1,9 @@
-#include "PersonaFactory.h"
+#include "tiposPersona.h"
 #include "SistemaMatricula.h"
 
 int main()
 {
+    registrarTiposDePersona();
     SistemaMatricula sistema;
 
     // Observador 1: agrega la fila nueva a la tabla de consulta de matriculas.
@@ -33,9 +34,9 @@ int main()
     sistema.registrarCurso(ada);
 
     // Las personas se crean con la fabrica del avance 2.
-    Persona* ana = PersonaFactory::crearPersona(TipoPersona::ESTUDIANTE, "Ana Torres", "20261234", "Ing. de Sistemas");
-    Persona* luis = PersonaFactory::crearPersona(TipoPersona::ESTUDIANTE, "Luis Quispe", "20262001", "Ing. de Sistemas");
-    Persona* maria = PersonaFactory::crearPersona(TipoPersona::ESTUDIANTE, "Maria Huaman", "20262002", "Ing. Industrial");
+    Persona* ana = PersonaFactory::crearPersona("Estudiante", "Ana Torres", "20261234", "Ing. de Sistemas");
+    Persona* luis = PersonaFactory::crearPersona("Estudiante", "Luis Quispe", "20262001", "Ing. de Sistemas");
+    Persona* maria = PersonaFactory::crearPersona("Estudiante", "Maria Huaman", "20262002", "Ing. Industrial");
     sistema.registrarPersona(ana);
     sistema.registrarPersona(luis);
     sistema.registrarPersona(maria);

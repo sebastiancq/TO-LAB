@@ -1,4 +1,4 @@
-#include "PersonaFactory.h"
+#include "tiposPersona.h"
 #include <vector>
 
 // Los mismos tres puntos de creacion de antes.cpp, ahora delegados a PersonaFactory.
@@ -7,28 +7,30 @@ std::vector<Persona*> cargarDatosIniciales()
 {
     std::vector<Persona*> personas;
     personas.push_back(PersonaFactory::crearPersona(
-        TipoPersona::DOCENTE, "Roxana Limache", "D-0456", "Ing. de Sistemas"));
+        "Docente", "Roxana Limache", "D-0456", "Ing. de Sistemas"));
     personas.push_back(PersonaFactory::crearPersona(
-        TipoPersona::ESTUDIANTE, "Ana Torres", "20261234", "Ing. de Sistemas"));
+        "Estudiante", "Ana Torres", "20261234", "Ing. de Sistemas"));
     return personas;
 }
 
 Persona* registrarDesdeFormulario(const std::string& tipo, const std::string& nombre,
                                   const std::string& codigo, const std::string& extra)
 {
-    return PersonaFactory::crearPersona(PersonaFactory::tipoDesdeTexto(tipo), nombre, codigo, extra);
+    return PersonaFactory::crearPersona(tipo, nombre, codigo, extra);
 }
 
 void importarIngresantes(std::vector<Persona*>& personas)
 {
     personas.push_back(PersonaFactory::crearPersona(
-        TipoPersona::ESTUDIANTE, "Luis Quispe", "20262001", "Ing. de Sistemas"));
+        "Estudiante", "Luis Quispe", "20262001", "Ing. de Sistemas"));
     personas.push_back(PersonaFactory::crearPersona(
-        TipoPersona::ESTUDIANTE, "Maria Huaman", "20262002", "Ing. Industrial"));
+        "Estudiante", "Maria Huaman", "20262002", "Ing. Industrial"));
 }
 
 int main()
 {
+    registrarTiposDePersona();
+
     std::vector<Persona*> personas = cargarDatosIniciales();
     personas.push_back(registrarDesdeFormulario("Estudiante", "Pedro Flores", "20261500", "Ing. Civil"));
     importarIngresantes(personas);

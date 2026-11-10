@@ -1,36 +1,39 @@
 #pragma once
 
-#include "estudiante.h"
-#include "docente.h"
+#include "persona.h"
+#include <functional>
+#include <map>
 #include <stdexcept>
 
-enum class TipoPersona { ESTUDIANTE, DOCENTE };
+// Recibe nombre, codigo y el dato propio de cada tipo, como la carrera o el departamento.
+using CreadorPersona =
+    std::function<Persona*(const std::string&, const std::string&, const std::string&)>;
 
-// Unico lugar del sistema que conoce las subclases concretas de Persona.
+// Crea personas a partir del tipo elegido en la lista desplegable del formulario.
+// No conoce las subclases concretas: cada tipo se registra con su creador, por lo que
+// agregar un tipo nuevo no obliga a modificar esta clase.
 // Quien recibe el puntero se encarga de liberarlo con delete.
 class PersonaFactory
 {
-public:
-    static Persona* crearPersona(TipoPersona tipo, const std::string& nombre,
-                                 const std::string& codigo, const std::string& extra)
+private:
+    static std::map<std::string, CreadorPersona>& creadores()
     {
-        switch (tipo)
-        {
-        case TipoPersona::ESTUDIANTE:
-            return new Estudiante(nombre, codigo, extra);
-        case TipoPersona::DOCENTE:
-            return new Docente(nombre, codigo, extra);
-        }
-        throw std::invalid_argument("Tipo de persona no reconocido");
+        static std::map<std::string, CreadorPersona> tabla;
+        return tabla;
     }
 
-    // El formulario entrega como texto el tipo elegido en la lista desplegable.
-    static TipoPersona tipoDesdeTexto(const std::string& texto)
+public:
+    static void registrarTipo(const std::string& tipo, CreadorPersona creador)
     {
-        if (texto == "Estudiante")
-            return TipoPersona::ESTUDIANTE;
-        if (texto == "Docente")
-            return TipoPersona::DOCENTE;
-        throw std::invalid_argument("Tipo de persona no reconocido: " + texto);
+        creadores()[tipo] = creador;
+    }
+
+    static Persona* crearPersona(const std::string& tipo, const std::string& nombre,
+                                 const std::string& codigo, const std::string& extra)
+    {
+        auto it = creadores().find(tipo);
+        if (it == creadores().end())
+            throw std::invalid_argument("Tipo de persona no reconocido: " + tipo);
+        return it->second(nombre, codigo, extra);
     }
 };
