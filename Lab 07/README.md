@@ -2,20 +2,20 @@
 
 ## Compilación
 
-Desde la raíz de `Lab 07`:
+Desde la carpeta `Lab 07`:
 
 ```sh
-g++ Ejercicio01/main.cpp -o Ejercicio01/main.exe
-g++ Ejercicio02/main.cpp -o Ejercicio02/main.exe
-g++ Ejercicio03/main.cpp -o Ejercicio03/main.exe
-g++ Ejercicio04/main.cpp -o Ejercicio04/main.exe
+g++ Ejercicio01/main.cpp -o Ejercicio01/main
+g++ Ejercicio02/main.cpp -o Ejercicio02/main
+g++ Ejercicio03/main.cpp -o Ejercicio03/main
+g++ Ejercicio04/main.cpp -o Ejercicio04/main
 ```
 
 ## Ejecución
 
 ```sh
-./Ejercicio01/main.exe
-./Ejercicio02/main.exe
-./Ejercicio03/main.exe
-./Ejercicio04/main.exe
+./Ejercicio01/main
+./Ejercicio02/main
+./Ejercicio03/main
+./Ejercicio04/main
 ```
